@@ -3,6 +3,8 @@ import Root from "../Components/Root/Root";
 import Home from "../Pages/Home/Home";
 import Login from "../Pages/Login/Login";
 import Register from "../Pages/Register/Register";
+import Order from "../Pages/Order/Order";
+import Dashboard from "../Pages/Dashboard/Dashboard";
 
 const router = new createBrowserRouter([
     {
@@ -18,8 +20,16 @@ const router = new createBrowserRouter([
                 element: <Login></Login>,
             },
             {
-                path: "register",
+                path: "/register",
                 element: <Register></Register>,
+            },
+            {
+                path: "/order",
+                element: <Order></Order>,
+            },
+            {
+                path: "/dashboard",
+                element: <Dashboard></Dashboard>,
             },
         ],
     },

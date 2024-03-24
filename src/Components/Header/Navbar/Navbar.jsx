@@ -1,19 +1,44 @@
-import { NavLink } from "react-router-dom";
+import { useContext } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
+import { AuthContext } from "../../../Providers/Providers";
 
 const Navbar = () => {
+    const navigate = useNavigate();
+    const { user, logoutUser } = useContext(AuthContext);
+
+    const handleLogout = () => {
+        logoutUser()
+            .then(() => {
+                navigate("/login");
+            })
+            .catch((error) => {
+                console.log(error.message);
+            });
+    };
+
     const navLinks = (
         <>
-            <li>
-                <NavLink to={"/"}>Home</NavLink>
-            </li>
-            <li>
-                {" "}
-                <NavLink to={"/login"}>Login</NavLink>
-            </li>
-            <li>
-                {" "}
-                <NavLink to={"/register"}>Register</NavLink>
-            </li>
+            {user ? (
+                <>
+                    <li>
+                        <NavLink to={"/"}>Home</NavLink>
+                    </li>
+
+                    <li>
+                        <NavLink to={"/order"}>Orders</NavLink>
+                    </li>
+
+                    <li>
+                        <NavLink to={"/dashboard"}>Dashboard</NavLink>
+                    </li>
+                </>
+            ) : (
+                <>
+                    <li>
+                        <NavLink to="/">Home</NavLink>
+                    </li>
+                </>
+            )}
         </>
     );
     return (
@@ -53,7 +78,16 @@ const Navbar = () => {
                 <ul className="menu menu-horizontal gap-4 px-1">{navLinks}</ul>
             </div>
             <div className="navbar-end">
-                <a className="btn">Button</a>
+                <p>{user?.email}</p>
+                {user ? (
+                    <button onClick={handleLogout} className="btn">
+                        logout
+                    </button>
+                ) : (
+                    <button onClick={handleLogout} className="btn">
+                        login
+                    </button>
+                )}
             </div>
         </div>
     );

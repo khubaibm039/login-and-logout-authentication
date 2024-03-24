@@ -1,7 +1,10 @@
 import { useContext } from "react";
 import { AuthContext } from "../../Providers/Providers";
+import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {
+    const navigate = useNavigate();
+
     const { loginUser } = useContext(AuthContext);
 
     const handleLogin = (e) => {
@@ -11,6 +14,7 @@ const Login = () => {
 
         loginUser(email, password)
             .then((result) => {
+                navigate("/dashboard");
                 console.log(result.user);
             })
             .catch((error) => {
@@ -57,8 +61,15 @@ const Login = () => {
                                 </a>
                             </label>
                         </div>
+
                         <div className="form-control mt-6">
                             <button className="btn btn-primary">Login</button>
+                        </div>
+                        <div className="flex">
+                            <p>Have no account </p>
+                            <Link className=" btn-link" to={"/register"}>
+                                Register
+                            </Link>
                         </div>
                     </form>
                 </div>
